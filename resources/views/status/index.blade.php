@@ -55,8 +55,8 @@
     </tr>
   </thead>
   <tbody>
-    @if ($data != null)
-    @foreach ($data as $item)
+    @if ($responseData != null)
+    @foreach ($responseData['data'] as $item)
     <tr>
       <td>{{$item['id']}}</td>
       <td>{{$item['code']}}</td>

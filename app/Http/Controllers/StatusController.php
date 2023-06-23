@@ -4,23 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class StatusController extends Controller
 {
     public function index()
     {
-        $response = Http::get('http://rest-api.test/api/v1/ministers/status');
+
+        $response = Http::withToken(Session::get('token'))->get('http://rest-api.test/api/v1/ministers/status');
         $responseData = $response->json();
-        $data = $responseData['data'];
-        return view('status.index', ['data' => $data]);
+        ///dd($responseData);
+        //$data = $responseData['data'];
+        return view('status.index', ['responseData' => $responseData]);
     }
 
     public function add(Request $request)
     {
-        $response = Http::post('http://rest-api.test/api/v1/minister/status/create', [
+        $response = Http::withToken(Session::get('token'))->post('http://rest-api.test/api/v1/minister/status/create', [
             'code' => $request->code,
             'name' => $request->name
         ]);
+        dd($response->json());
         return redirect('dashboard/status');
     }
 

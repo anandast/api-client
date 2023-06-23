@@ -1,11 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PartyController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MinisterController;
 use App\Http\Controllers\MinistryController;
-use App\Http\Controllers\PartyController;
-use App\Http\Controllers\StatusController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
+use Illuminate\Auth\Events\Login;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +24,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/dashboard', [MinisterController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'register']);
+Route::get('/dashboard', [MinisterController::class, 'index'])->name('dashboard');
 Route::get('/dashboard/minister', [MinisterController::class, 'allData']);
 // Route::get('/dashboard/minister', [MinisterController::class, 'index']);
 // Route::patch('/dashboard/minister', [MinisterController::class, 'edit']);
@@ -36,7 +42,7 @@ Route::patch('/dashboard/categories', [CategoryController::class, 'edit']);
 Route::delete('/dashboard/categories', [CategoryController::class, 'delete']);
 
 #Route Status
-Route::get('/dashboard/status', [StatusController::class, 'index']);
+Route::get('/dashboard/status', [StatusController::class, 'index'])->name('dashboard');;
 Route::post('/dashboard/status', [StatusController::class, 'add']);
 Route::patch('/dashboard/status', [StatusController::class, 'edit']);
 Route::delete('/dashboard/status', [StatusController::class, 'delete']);
